@@ -6,5 +6,5 @@
 //
 
 public protocol LocationServiceWorker: Sendable {
-    func getCurrentLocation() async throws -> (lat: Double, lon: Double, cityName: String)
+    func getCurrentLocation() async throws -> (lat: Double, lon: Double)
 }

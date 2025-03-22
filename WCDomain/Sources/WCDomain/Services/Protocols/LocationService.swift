@@ -6,5 +6,5 @@
 //
 
 public protocol LocationService {
-    func getCurrentLocation() async -> Result<(lat: Double, lon: Double, cityName: String), Error>
+    func getCurrentLocation() async -> Result<(lat: Double, lon: Double), Error>
 }

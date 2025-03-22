@@ -12,7 +12,7 @@ public struct WCLocationService: Sendable, LocationService {
         self.worker = worker
     }
     
-    public func getCurrentLocation() async -> Result<(lat: Double, lon: Double, cityName: String), any Error> {
+    public func getCurrentLocation() async -> Result<(lat: Double, lon: Double), any Error> {
         do {
             return Result.success(try await worker.getCurrentLocation())
         } catch {
