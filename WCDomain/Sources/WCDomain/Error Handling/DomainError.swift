@@ -9,7 +9,9 @@ import Foundation
 
 public enum DomainError: String, LocalizedError {
     
-    case standard = "sample_error_code"
+    case standard
+    case locationAuthorization
+    case locationAuthorizationDenied
     
     public var code: String {
         self.rawValue
@@ -19,12 +21,15 @@ public enum DomainError: String, LocalizedError {
         switch self {
         case .standard:
             return NSLocalizedString("error_standard", comment: "A generic error message.")
+        case .locationAuthorization:
+            return NSLocalizedString("error_location_authorization", comment: "Authorization to use location services could not be determined for unknown reasons.")
+        case .locationAuthorizationDenied:
+            return NSLocalizedString("error_location_authorization_denied", comment: "Authorization to use location services denied.")
         }
     }
 }
 
 func mapError(error: Error) -> DomainError {
-    
     // Return a dummy error for now.
     return DomainError.standard
 }
