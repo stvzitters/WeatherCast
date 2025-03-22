@@ -1,3 +1,4 @@
 "error_standard" = "Oops, something went wrong. Please try again.";
 "error_location_authorization" = "Could not determine permission for location services.";
 "error_location_authorization_denied" = "You have not granted permission to use location services.";
+"error_network" = "Network connection unavailable.";

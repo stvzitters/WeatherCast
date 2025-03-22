@@ -12,6 +12,7 @@ public enum DomainError: String, LocalizedError {
     case standard
     case locationAuthorization
     case locationAuthorizationDenied
+    case network
     
     public var code: String {
         self.rawValue
@@ -25,6 +26,8 @@ public enum DomainError: String, LocalizedError {
             return NSLocalizedString("error_location_authorization", comment: "Authorization to use location services could not be determined for unknown reasons.")
         case .locationAuthorizationDenied:
             return NSLocalizedString("error_location_authorization_denied", comment: "Authorization to use location services denied.")
+        case .network:
+            return NSLocalizedString("error_network", comment: "A general network-related error. E.g. no internet connection.")
         }
     }
 }
