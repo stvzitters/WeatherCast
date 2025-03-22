@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "WCDomain",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v18)
     ],
