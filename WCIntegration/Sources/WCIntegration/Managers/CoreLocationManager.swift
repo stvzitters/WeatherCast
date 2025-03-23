@@ -41,7 +41,7 @@ final class CoreLocationManager: NSObject, Sendable {
         }
     }
     
-    func resumeContinuation(withError error: DomainError) {
+    func resumeContinuation(withError error: Error) {
         Task { @MainActor in
             guard !didResumeContinuation else { return }
             continuation?.resume(throwing: error)
@@ -75,13 +75,6 @@ extension CoreLocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
-        switch error {
-        case CLError.denied:
-            resumeContinuation(withError: DomainError.locationAuthorizationDenied)
-        case CLError.network:
-            resumeContinuation(withError: DomainError.network)
-        default:
-            resumeContinuation(withError: DomainError.locationAuthorization)
-        }
+        resumeContinuation(withError: error)
     }
 }
