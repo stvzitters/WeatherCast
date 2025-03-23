@@ -31,8 +31,3 @@ public enum DomainError: String, LocalizedError {
         }
     }
 }
-
-func mapError(error: Error) -> DomainError {
-    // Return a dummy error for now.
-    return DomainError.standard
-}
