@@ -7,10 +7,12 @@
 
 import SwiftUI
 import SwiftData
+import WCDomain
+import WCIntegration
 
 struct ContentView: View {
     var body: some View {
-        Text("Watch this space!")
+        WeatherView()
     }
 }
 

@@ -19,7 +19,7 @@ public struct WCWeatherService: Sendable, WeatherService {
         do {
             return Result.success(try await worker.findLocationInfo(cityName: cityName))
         } catch {
-            return Result.failure(error)
+            return Result.failure(DomainError.validate(error: error))
         }
     }
     
@@ -30,7 +30,7 @@ public struct WCWeatherService: Sendable, WeatherService {
             
             return Result.success((reading: try await reading, forecast: try await forecasts))
         } catch {
-            return Result.failure(error)
+            return Result.failure(DomainError.validate(error: error))
         }
     }
 }

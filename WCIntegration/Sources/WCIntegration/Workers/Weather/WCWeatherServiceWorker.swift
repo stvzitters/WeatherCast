@@ -30,8 +30,7 @@ public struct WCWeatherServiceWorker: WeatherServiceWorker {
             let responseData = try await manager.performRequest(urlString: EndPoints.locationCoordinates, parameters: parameters)
             return try mapToDomainLocationInfo(data: responseData)
         } errorMapper: { error in
-            // Note: No specific error mapping done at this points. For future reference.
-            DomainError.standard
+            DomainError.locationCoordinates
         }
     }
     
@@ -47,8 +46,7 @@ public struct WCWeatherServiceWorker: WeatherServiceWorker {
             let responseData = try await manager.performRequest(urlString: EndPoints.currentWeather, parameters: parameters)
             return try mapToDomainReading(data: responseData)
         } errorMapper: { error in
-            // Note: No specific error mapping done at this points. For future reference.
-            DomainError.standard
+            DomainError.weatherReading
         }
     }
     
@@ -64,8 +62,7 @@ public struct WCWeatherServiceWorker: WeatherServiceWorker {
             let responseData = try await manager.performRequest(urlString: EndPoints.weather5DayForecast, parameters: parameters)
             return try mapToDomainForecasts(data: responseData)
         } errorMapper: { error in
-            // Note: No specific error mapping done at this points. For future reference.
-            DomainError.standard
+            DomainError.weatherForecast
         }
     }
 }
