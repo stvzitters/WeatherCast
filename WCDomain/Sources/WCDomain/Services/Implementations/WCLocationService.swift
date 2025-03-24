@@ -19,7 +19,7 @@ public struct WCLocationService: Sendable, LocationService {
         do {
             return Result.success(try await worker.getCurrentLocation())
         } catch {
-            return Result.failure(error)
+            return Result.failure(DomainError.validate(error: error))
         }
     }
 }
