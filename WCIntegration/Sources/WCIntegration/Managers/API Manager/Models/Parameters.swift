@@ -11,4 +11,5 @@ struct Parameters {
     static let lon = "lon"
     static let units = "units"
     static let cityName = "q"
+    static let numberOfTimestamps = "cnt"
 }

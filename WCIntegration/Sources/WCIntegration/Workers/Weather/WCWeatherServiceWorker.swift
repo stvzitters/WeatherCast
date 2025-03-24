@@ -57,6 +57,11 @@ public struct WCWeatherServiceWorker: WeatherServiceWorker {
                 Parameters.lat: String(lat),
                 Parameters.lon: String(lon),
                 Parameters.units: "metric",
+                
+                // Ensure that there are enough timestamps for a 5-day forecast.
+                // The default value, whatever it is, does not seem to be enough when requesting at 00:05AM.
+                // 1 day = 8 x 3-hour intervals, therefore 5 days = 40 3-hour intervals and added an extra 10 for safety.
+                Parameters.numberOfTimestamps: "50",
             ]
             
             let responseData = try await manager.performRequest(urlString: EndPoints.weather5DayForecast, parameters: parameters)
