@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WCWeatherService: Sendable, WeatherService {
+public final class WCWeatherService: Sendable, WeatherService {
     
     private let worker: WeatherServiceWorker
     

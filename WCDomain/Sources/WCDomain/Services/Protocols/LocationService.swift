@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol LocationService {
+public protocol LocationService: Sendable {
     func getCurrentLocation() async -> Result<(lat: Double, lon: Double), Error>
 }
