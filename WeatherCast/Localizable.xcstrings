@@ -1,0 +1,33 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "-" : {
+
+    },
+    "Cloudy" : {
+      "comment" : "Cloudy weather conditions."
+    },
+    "Current" : {
+      "comment" : "Current temperature."
+    },
+    "Last Updated" : {
+      "comment" : "Last time weather information was updated."
+    },
+    "max" : {
+      "comment" : "Maximum temperature."
+    },
+    "min" : {
+      "comment" : "Minimum temperature."
+    },
+    "Rainy" : {
+      "comment" : "Rainy weather conditions."
+    },
+    "Retrieving Weather Information" : {
+      "comment" : "Retrieving weather information from service provider."
+    },
+    "Sunny" : {
+      "comment" : "Sunny weather conditions."
+    }
+  },
+  "version" : "1.0"
+}

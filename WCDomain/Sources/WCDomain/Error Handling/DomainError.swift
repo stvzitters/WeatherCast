@@ -39,19 +39,19 @@ public enum DomainError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .standard:
-            return NSLocalizedString("error_standard", comment: "A generic error message.")
+            return NSLocalizedString("error_standard", bundle: Bundle.module, comment: "A generic error message.")
         case .locationAuthorization:
-            return NSLocalizedString("error_location_authorization", comment: "Authorization to use location services could not be determined for unknown reasons.")
+            return NSLocalizedString("error_location_authorization", bundle: Bundle.module, comment: "Authorization to use location services could not be determined for unknown reasons.")
         case .locationAuthorizationDenied:
-            return NSLocalizedString("error_location_authorization_denied", comment: "Authorization to use location services denied.")
+            return NSLocalizedString("error_location_authorization_denied", bundle: Bundle.module, comment: "Authorization to use location services denied.")
         case .locationCoordinates:
-            return NSLocalizedString("error_location_coordinates", comment: "Could not retrieve location coordinates.")
+            return NSLocalizedString("error_location_coordinates", bundle: Bundle.module, comment: "Could not retrieve location coordinates.")
         case .weatherReading:
-            return NSLocalizedString("error_weather_reading", comment: "Could not retrieve weather reading.")
+            return NSLocalizedString("error_weather_reading", bundle: Bundle.module, comment: "Could not retrieve weather reading.")
         case .weatherForecast:
-            return NSLocalizedString("error_weather_forecast", comment: "Could not retrieve weather forecast.")
+            return NSLocalizedString("error_weather_forecast", bundle: Bundle.module, comment: "Could not retrieve weather forecast.")
         case .network:
-            return NSLocalizedString("error_network", comment: "A general network-related error. E.g. no internet connection.")
+            return NSLocalizedString("error_network", bundle: Bundle.module, comment: "A general network-related error. E.g. no internet connection.")
         }
     }
     

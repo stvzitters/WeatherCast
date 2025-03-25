@@ -1,0 +1,83 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "error_location_authorization" : {
+      "comment" : "Authorization to use location services could not be determined for unknown reasons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not determine permission for location services."
+          }
+        }
+      }
+    },
+    "error_location_authorization_denied" : {
+      "comment" : "Authorization to use location services denied.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have not granted permission to use location services."
+          }
+        }
+      }
+    },
+    "error_location_coordinates" : {
+      "comment" : "Could not retrieve location coordinates.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not determine location."
+          }
+        }
+      }
+    },
+    "error_network" : {
+      "comment" : "A general network-related error. E.g. no internet connection.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network connection unavailable."
+          }
+        }
+      }
+    },
+    "error_standard" : {
+      "comment" : "A generic error message.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oops, something went wrong. Please try again."
+          }
+        }
+      }
+    },
+    "error_weather_forecast" : {
+      "comment" : "Could not retrieve weather forecast.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not retrieve weather forecast."
+          }
+        }
+      }
+    },
+    "error_weather_reading" : {
+      "comment" : "Could not retrieve weather reading.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not retrive weather reading."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
