@@ -24,6 +24,8 @@ extension WeatherView {
         var forecasts: [WeatherForecast] = []
         var weatherConditions: WeatherCondition = .unsupported
         var didRetrieveWeather: Bool = false
+        var isOffline: Bool = false
+        var lastUpdated: Date?
         var error: DomainError?
         
         init(locationService: LocationService = ServiceFactory.createLocationService(),
@@ -36,6 +38,9 @@ extension WeatherView {
         
         func getWeather() async {
             do {
+                error = nil
+                isOffline = false
+                
                 let location = try await locationService.getCurrentLocation().get()
                 let weatherInfo = try await weatherService.getWeather(lat: location.lat, lon: location.lon).get()
                 
@@ -54,8 +59,8 @@ extension WeatherView {
                 return
             }
             
-            
             if error == DomainError.network {
+                self.isOffline = true
                 self.error = getSavedWeatherInfo()
             } else {
                 self.error = error
@@ -69,7 +74,7 @@ extension WeatherView {
             }
             
             setWeatherInfo((reading: weatherInfo.reading, forecast: weatherInfo.forecast))
-            
+            lastUpdated = weatherInfo.lastUpdated
             return nil
         }
         

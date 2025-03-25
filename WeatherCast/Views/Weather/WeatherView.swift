@@ -20,19 +20,25 @@ struct WeatherView: View {
         NavigationStack {
             VStack {
                 if viewModel.didRetrieveWeather && viewModel.error == nil {
-                    ScrollView {
-                        WeatherHeaderView(backgroundImage: viewModel.weatherConditions.backgroundImage,
-                                          cityName: viewModel.cityName,
-                                          currentTemp: viewModel.currentTemp,
-                                          weatherConditionsText: viewModel.weatherConditions.text)
+                    VStack {
+                        ScrollView {
+                            WeatherHeaderView(backgroundImage: viewModel.weatherConditions.backgroundImage,
+                                              cityName: viewModel.cityName,
+                                              currentTemp: viewModel.currentTemp,
+                                              weatherConditionsText: viewModel.weatherConditions.text)
+                            
+                            WeatherSummaryView(currentTemp: viewModel.currentTemp,
+                                               minTemp: viewModel.minTemp,
+                                               maxTemp: viewModel.maxTemp)
+                            
+                            dividerView
+                            
+                            WeatherForecastView(forecasts: viewModel.forecasts)
+                        }
                         
-                        WeatherSummaryView(currentTemp: viewModel.currentTemp,
-                                           minTemp: viewModel.minTemp,
-                                           maxTemp: viewModel.maxTemp)
-                        
-                        dividerView
-                        
-                        WeatherForecastView(forecasts: viewModel.forecasts)
+                        if viewModel.isOffline {
+                            offlineView
+                        }
                     }
                     .background(viewModel.weatherConditions.backgroundColor)
                 } else if viewModel.didRetrieveWeather && viewModel.error != nil {
@@ -62,6 +68,19 @@ struct WeatherView: View {
         ProgressView("Retrieving Weather Information")
             .font(.title3)
             .foregroundStyle(.foreground)
+    }
+    
+    private var offlineView: some View {
+        VStack {
+            Image(systemName: "wifi.exclamationmark")
+            
+            if let lastUpdated = viewModel.lastUpdated {
+                Text("Last Updated")
+                Text(lastUpdated.formatted(date: .abbreviated, time: .shortened))
+            }
+        }
+        .font(.footnote)
+        .foregroundStyle(.white)
     }
     
     private var errorView: some View {
