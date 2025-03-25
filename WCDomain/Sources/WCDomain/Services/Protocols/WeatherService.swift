@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol WeatherService {
+public protocol WeatherService: Sendable {
     func findLocationInfo(cityName: String) async -> Result<[(lat: Double, lon: Double, cityName: String)], Error>
     func getWeather(lat: Double, lon: Double) async -> Result<(reading: WeatherReading, forecast: [WeatherForecast]), Error>
 }

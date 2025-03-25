@@ -10,7 +10,7 @@ import SwiftUI
 import WCDomain
 
 extension WeatherView {
-    @Observable final class ViewModel {
+    @MainActor @Observable final class ViewModel {
         
         // MARK: Services
         

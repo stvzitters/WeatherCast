@@ -8,7 +8,7 @@
 import WCDomain
 import CoreLocation
 
-public struct WCLocationServiceWorker: LocationServiceWorker {
+public final class WCLocationServiceWorker: LocationServiceWorker {
     private let manager = CoreLocationManager()
     
     public init() {}

@@ -8,7 +8,7 @@
 import Foundation
 import WCDomain
 
-public struct WCWeatherServiceWorker: WeatherServiceWorker {
+public final class WCWeatherServiceWorker: WeatherServiceWorker {
     
     private let manager: APIManager
     

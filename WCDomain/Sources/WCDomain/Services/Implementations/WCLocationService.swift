@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct WCLocationService: Sendable, LocationService {
+public final class WCLocationService: Sendable, LocationService {
     
     private let worker: LocationServiceWorker
     
