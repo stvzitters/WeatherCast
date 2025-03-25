@@ -8,7 +8,6 @@
 import Foundation
 
 public protocol WeatherServiceWorker: Sendable {
-    func findLocationInfo(cityName: String) async throws -> [(lat: Double, lon: Double, cityName: String)]
     func getReading(lat: Double, lon: Double) async throws -> WeatherReading
     func getForecast(lat: Double, lon: Double) async throws -> [WeatherForecast]
 }

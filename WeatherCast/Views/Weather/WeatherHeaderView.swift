@@ -12,7 +12,7 @@ struct WeatherHeaderView: View {
     let backgroundImage: ImageResource?
     let cityName: String
     let currentTemp: String
-    let weatherConditionsText: String
+    let weatherConditionsText: LocalizedStringKey
     
     var body: some View {
         VStack {

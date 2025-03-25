@@ -24,7 +24,7 @@ extension WCWeatherServiceWorker {
     /// Map an array of OpenWeather forecasts to an array of the corresponding domain layer models.
     func mapToDomainForecasts(data: Data) throws -> [WeatherForecast] {
         let openWeatherForecast: OpenWeatherForecastList = try JSONDecoder()
-            .withDateFormat("yyyy-MM-d H:mm:ss")
+            .withDateFormat(JSONDecoder.openWeatherDateFormat)
             .decode(OpenWeatherForecastList.self, from: data)
         
         var forecasts: [WeatherForecast] = []
@@ -48,7 +48,9 @@ extension WCWeatherServiceWorker {
                 continue
             }
             
-            forecasts.append(WeatherForecast(date: date, maxTemp: maxTemp, condition: condition.mapToDomainModel()))
+            forecasts.append(WeatherForecast(date: date,
+                                             maxTemp: maxTemp,
+                                             condition: condition.mapToDomainModel()))
         }
         
         // Remove any forecasts for the current day. Only for the NEXT n days.

@@ -25,7 +25,7 @@ public enum OpenWeatherCondition: String, Codable, Sendable {
     case squall
     case tornado
     case unsupported
-    case notFound
+    case unavailable
     
     
     /// The priority of a WeatherCondition determines how weather condition forecasts are presented.
@@ -48,7 +48,6 @@ public enum OpenWeatherCondition: String, Codable, Sendable {
         }
     }
     
-    /// Map to the corresponding domain layer model.
     func mapToDomainModel() -> WeatherCondition {
         switch self {
         case .clear:

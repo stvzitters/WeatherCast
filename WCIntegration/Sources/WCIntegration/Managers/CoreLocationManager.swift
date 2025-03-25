@@ -9,8 +9,8 @@ import WCDomain
 @preconcurrency import CoreLocation
 
 final class CoreLocationManager: NSObject, Sendable {
-    private let locationManager = CLLocationManager()
     
+    private let locationManager = CLLocationManager()
     @MainActor private var continuation: CheckedContinuation<(lat: Double, lon: Double), Error>?
     @MainActor private var didResumeContinuation: Bool = false
     
@@ -52,26 +52,21 @@ final class CoreLocationManager: NSObject, Sendable {
 
 extension CoreLocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        Task { @MainActor in
-            switch manager.authorizationStatus {
-            case .authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-            case .notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-            case .restricted, .denied:
-                resumeContinuation(withError: DomainError.locationAuthorizationDenied)
-            default:
-                resumeContinuation(withError: DomainError.locationAuthorization)
-            }
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            resumeContinuation(withError: DomainError.locationAuthorizationDenied)
+        default:
+            resumeContinuation(withError: DomainError.locationAuthorization)
         }
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        Task { @MainActor in
-            guard let location = locations.first else { return }
-            resumeContinuation(withLocation: (lat: location.coordinate.latitude, lon: location.coordinate.longitude))
-        }
+        guard let location = locations.first else { return }
+        resumeContinuation(withLocation: (lat: location.coordinate.latitude, lon: location.coordinate.longitude))
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {

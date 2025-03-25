@@ -10,13 +10,7 @@ import WCDomain
 
 struct WeatherForecastView: View {
     
-    @State private var viewModel: ViewModel
-    private let forecasts: [WeatherForecast]
-    
-    init(viewModel: ViewModel = ViewModel(), forecasts: [WeatherForecast]) {
-        self._viewModel = .init(wrappedValue: viewModel)
-        self.forecasts = forecasts
-    }
+    let forecasts: [WeatherForecast]
     
     var body: some View {
         ForEach(forecasts) { forecast in
@@ -27,7 +21,7 @@ struct WeatherForecastView: View {
                         length / 3.0
                     }
                 
-                viewModel.getConditionIconImage(forCondition: forecast.condition)
+                forecast.condition.icon
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 32, height: 32)
