@@ -8,6 +8,8 @@
 import Foundation
 
 extension JSONDecoder {
+    static let openWeatherDateFormat = "yyyy-MM-d H:mm:ss"
+    
     func withDateFormat(_ dateFormat: String) -> JSONDecoder {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

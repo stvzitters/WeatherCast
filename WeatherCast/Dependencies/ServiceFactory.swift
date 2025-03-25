@@ -18,4 +18,8 @@ struct ServiceFactory {
     static func createWeatherService() -> WeatherService {
         WCWeatherService(worker: WCWeatherServiceWorker(manager: APIManager()))
     }
+    
+    static func createWeatherDatabase() -> WeatherDatabase {
+        SwiftDatabase()
+    }
 }

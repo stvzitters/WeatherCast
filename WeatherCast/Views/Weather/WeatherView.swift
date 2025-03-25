@@ -20,37 +20,35 @@ struct WeatherView: View {
         NavigationStack {
             VStack {
                 if viewModel.didRetrieveWeather && viewModel.error == nil {
-                    WeatherHeaderView(backgroundImage: viewModel.backgroundImage,
-                                      cityName: viewModel.cityName,
-                                      currentTemp: viewModel.currentTemp,
-                                      weatherConditionsText: viewModel.weatherConditionsText)
-                    
                     ScrollView {
+                        WeatherHeaderView(backgroundImage: viewModel.weatherConditions.backgroundImage,
+                                          cityName: viewModel.cityName,
+                                          currentTemp: viewModel.currentTemp,
+                                          weatherConditionsText: viewModel.weatherConditions.text)
+                        
                         WeatherSummaryView(currentTemp: viewModel.currentTemp,
                                            minTemp: viewModel.minTemp,
                                            maxTemp: viewModel.maxTemp)
                         
-                        divider
+                        dividerView
                         
                         WeatherForecastView(forecasts: viewModel.forecasts)
                     }
+                    .background(viewModel.weatherConditions.backgroundColor)
                 } else if viewModel.didRetrieveWeather && viewModel.error != nil {
-                    Text(viewModel.error?.localizedDescription ?? DomainError.standard.localizedDescription)
-                        .font(.headline)
-                        .foregroundStyle(.foreground)
+                    errorView
                 } else {
                     progressView
                 }
             }
-            .ignoresSafeArea(.all, edges: .top)
-            .background(viewModel.backgroundColor)
+            .ignoresSafeArea(edges: .top)
             .task {
                 await viewModel.getWeather()
             }
         }
     }
     
-    private var divider: some View {
+    private var dividerView: some View {
         VStack {
             Color.white
                 .frame(height: 2)
@@ -63,6 +61,12 @@ struct WeatherView: View {
     private var progressView: some View {
         ProgressView("Retrieving Weather Information")
             .font(.title3)
+            .foregroundStyle(.foreground)
+    }
+    
+    private var errorView: some View {
+        Text(viewModel.error?.localizedDescription ?? DomainError.standard.localizedDescription)
+            .font(.headline)
             .foregroundStyle(.foreground)
     }
 }

@@ -8,16 +8,14 @@
 import Foundation
 import SwiftUI
 import WCDomain
+import WCDatabase
 
 extension WeatherView {
     @MainActor @Observable final class ViewModel {
         
-        // MARK: Services
-        
         private let locationService: LocationService
         private let weatherService: WeatherService
-        
-        // MARK: Observable Properties
+        private let weatherDatabase: WeatherDatabase
         
         var cityName: String = ""
         var currentTemp: String = ""
@@ -25,76 +23,75 @@ extension WeatherView {
         var maxTemp: String = ""
         var forecasts: [WeatherForecast] = []
         var weatherConditions: WeatherCondition = .unsupported
-        var weatherConditionsText: String = ""
-        var backgroundColor: Color {
-            switch weatherConditions {
-            case .rain:
-                return .wcRain
-            case .clouds:
-                return .wcClouds
-            case .clear:
-                return .wcClear
-            default:
-                return .wcUnsupported
-            }
-        }
-        var backgroundImage: ImageResource? {
-            switch weatherConditions {
-            case .rain:
-                return .backgroundRain
-            case .clouds:
-                return .backgroundClouds
-            case .clear:
-                return .backgroundClear
-            default:
-                return nil
-            }
-        }
         var didRetrieveWeather: Bool = false
         var error: DomainError?
         
-        // MARK: Initializer
-        
         init(locationService: LocationService = ServiceFactory.createLocationService(),
-             weatherService: WeatherService = ServiceFactory.createWeatherService()) {
+             weatherService: WeatherService = ServiceFactory.createWeatherService(),
+             weatherDatabase: WeatherDatabase = ServiceFactory.createWeatherDatabase()) {
             self.locationService = locationService
             self.weatherService = weatherService
+            self.weatherDatabase = weatherDatabase
         }
-        
-        // MARK: Data Retrieval
         
         func getWeather() async {
             do {
                 let location = try await locationService.getCurrentLocation().get()
-                let currentWeather = try await weatherService.getWeather(lat: location.lat, lon: location.lon).get()
+                let weatherInfo = try await weatherService.getWeather(lat: location.lat, lon: location.lon).get()
                 
-                cityName = currentWeather.reading.cityName.capitalized
-                weatherConditions = currentWeather.reading.condition
-                weatherConditionsText = setWeatherConditionText(weatherCondition: currentWeather.reading.condition)
-                currentTemp = Measurement.convert(temperature: currentWeather.reading.currentTemp, toUnit: .celsius)
-                minTemp = Measurement.convert(temperature: currentWeather.reading.minTemp, toUnit: .celsius)
-                maxTemp = Measurement.convert(temperature: currentWeather.reading.maxTemp, toUnit: .celsius)
-                forecasts = currentWeather.forecast
+                setWeatherInfo(weatherInfo)
+                saveWeatherInfo(lat: location.lat, lon: location.lon, reading: weatherInfo.reading, forecast: weatherInfo.forecast)
             } catch {
-                self.error = error as? DomainError
+                handleError(error)
             }
             
             didRetrieveWeather = true
         }
         
-        // MARK: Convenience
-        
-        private func setWeatherConditionText(weatherCondition: WeatherCondition) -> String {
-            switch weatherCondition {
-            case .clear:
-                return "Sunny"
-            case .clouds:
-                return "Cloudy"
-            case .rain:
-                return "Rainy"
-            default:
-                return "-"
+        private func handleError(_ error: Error) {
+            guard let error = error as? DomainError else {
+                self.error = DomainError.standard
+                return
             }
+            
+            
+            if error == DomainError.network {
+                self.error = getSavedWeatherInfo()
+            } else {
+                self.error = error
+            }
+        }
+        
+        private func getSavedWeatherInfo() -> DomainError? {
+            guard let weatherInfo = try? weatherDatabase.retrieveWeatherInfoArray().get().first else {
+                // NB: Display network error if network and saved weather info is not available.
+                return DomainError.network
+            }
+            
+            setWeatherInfo((reading: weatherInfo.reading, forecast: weatherInfo.forecast))
+            
+            return nil
+        }
+        
+        private func saveWeatherInfo(lat: Double, lon: Double, reading: WeatherReading, forecast: [WeatherForecast]) {
+            // NB: Use "current_location" for the user's current location id, to prevent creating a new database entry each time.
+            _ = weatherDatabase.saveWeatherInfo(WeatherInfo(id: "current_location",
+                                                            lat: lat,
+                                                            lon: lon,
+                                                            reading: reading,
+                                                            forecast: forecast,
+                                                            lastUpdated: Date()))
+            
+            // TODO: Decide what to do if weather info could not be saved for offline use.
+        }
+        
+        private func setWeatherInfo(_ weatherInfo: (reading: WeatherReading, forecast: [WeatherForecast])) {
+            cityName = weatherInfo.reading.cityName.capitalized
+            weatherConditions = weatherInfo.reading.condition
+            currentTemp = Measurement.convert(temperature: weatherInfo.reading.currentTemp, toUnit: .celsius)
+            minTemp = Measurement.convert(temperature: weatherInfo.reading.minTemp, toUnit: .celsius)
+            maxTemp = Measurement.convert(temperature: weatherInfo.reading.maxTemp, toUnit: .celsius)
+            forecasts = weatherInfo.forecast
         }
     }
 }

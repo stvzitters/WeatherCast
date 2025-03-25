@@ -16,7 +16,11 @@ public struct WeatherReading: Codable, Sendable, Identifiable {
     public let maxTemp: Double
     public let condition: WeatherCondition
     
-    public init(cityName: String, currentTemp: Double, minTemp: Double, maxTemp: Double, condition: WeatherCondition) {
+    public init(cityName: String,
+                currentTemp: Double,
+                minTemp: Double,
+                maxTemp: Double,
+                condition: WeatherCondition) {
         self.id = UUID().uuidString
         self.cityName = cityName
         self.currentTemp = currentTemp

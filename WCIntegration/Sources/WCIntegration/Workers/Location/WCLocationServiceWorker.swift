@@ -9,6 +9,7 @@ import WCDomain
 import CoreLocation
 
 public final class WCLocationServiceWorker: LocationServiceWorker {
+    
     private let manager = CoreLocationManager()
     
     public init() {}

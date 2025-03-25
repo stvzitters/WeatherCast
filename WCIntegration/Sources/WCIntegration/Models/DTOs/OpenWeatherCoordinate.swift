@@ -8,6 +8,7 @@
 import Foundation
 
 struct OpenWeatherCoordinate {
+    
     let name: String
     let state: String
     let country: String
