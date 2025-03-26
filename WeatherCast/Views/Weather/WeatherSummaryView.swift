@@ -16,7 +16,7 @@ struct WeatherSummaryView: View {
     var body: some View {
         HStack (spacing: 0) {
             VStack {
-                Text(currentTemp)
+                Text(minTemp)
                 Text("min")
             }
             .padding(.leading, 8)
@@ -25,7 +25,7 @@ struct WeatherSummaryView: View {
             }
             
             VStack {
-                Text(minTemp)
+                Text(currentTemp)
                 Text("Current")
             }
             .containerRelativeFrame(.horizontal, alignment: .center) { length, axis in
