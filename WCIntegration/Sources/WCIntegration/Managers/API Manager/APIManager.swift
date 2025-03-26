@@ -34,7 +34,7 @@ public struct APIManager: Sendable {
         // NB: Only supporting the JSON content type. Support for additional content types can be implemented if required.
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let (responseData, _) = try await URLSession.shared.data(for: request)
+        let (responseData, _) = try await urlSession.data(for: request)
         
         return responseData
     }

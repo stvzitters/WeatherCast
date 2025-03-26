@@ -19,21 +19,6 @@ public final class WCWeatherServiceWorker: WeatherServiceWorker {
         self.manager = manager
     }
     
-    public func findLocationInfo(cityName: String) async throws -> [(lat: Double, lon: Double, cityName: String)] {
-        try await execute {
-            let parameters = [
-                Parameters.apiKey: apiKey,
-                Parameters.cityName: cityName,
-                Parameters.units: "metric"
-            ]
-            
-            let responseData = try await manager.performRequest(urlString: EndPoints.locationCoordinates, parameters: parameters)
-            return try mapToDomainLocationInfo(data: responseData)
-        } errorMapper: { error in
-            DomainError.locationCoordinates
-        }
-    }
-    
     public func getReading(lat: Double, lon: Double) async throws -> WeatherReading {
         try await execute {
             let parameters = [
@@ -44,7 +29,7 @@ public final class WCWeatherServiceWorker: WeatherServiceWorker {
             ]
             
             let responseData = try await manager.performRequest(urlString: EndPoints.currentWeather, parameters: parameters)
-            return try mapToDomainReading(data: responseData)
+            return try WCWeatherServiceWorker.mapToDomainReading(data: responseData)
         } errorMapper: { error in
             DomainError.weatherReading
         }
@@ -65,7 +50,7 @@ public final class WCWeatherServiceWorker: WeatherServiceWorker {
             ]
             
             let responseData = try await manager.performRequest(urlString: EndPoints.weather5DayForecast, parameters: parameters)
-            return try mapToDomainForecasts(data: responseData)
+            return try WCWeatherServiceWorker.mapToDomainForecasts(data: responseData)
         } errorMapper: { error in
             DomainError.weatherForecast
         }
