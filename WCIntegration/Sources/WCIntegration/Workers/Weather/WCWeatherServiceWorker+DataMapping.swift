@@ -10,19 +10,13 @@ import WCDomain
 
 extension WCWeatherServiceWorker {
     
-    /// Map an array of OpenWeather coordinates to an array of the corresponding domain layer models.
-    func mapToDomainLocationInfo(data: Data) throws -> [(lat: Double, lon: Double, cityName: String)] {
-        OpenWeatherCoordinate
-            .mapToDomainModelArray(coordinates: try JSONDecoder().decode([OpenWeatherCoordinate].self, from: data))
-    }
-    
     /// Map an OpenWeather reading to the corresponding domain layer model.
-    func mapToDomainReading(data: Data) throws -> WeatherReading {
+    static func mapToDomainReading(data: Data) throws -> WeatherReading {
         try JSONDecoder().decode(OpenWeatherReading.self, from: data).mapToDomainModel()
     }
     
     /// Map an array of OpenWeather forecasts to an array of the corresponding domain layer models.
-    func mapToDomainForecasts(data: Data) throws -> [WeatherForecast] {
+    static func mapToDomainForecasts(data: Data) throws -> [WeatherForecast] {
         let openWeatherForecast: OpenWeatherForecastList = try JSONDecoder()
             .withDateFormat(JSONDecoder.openWeatherDateFormat)
             .decode(OpenWeatherForecastList.self, from: data)
@@ -38,10 +32,10 @@ extension WCWeatherServiceWorker {
          - Date: Take the first forecast. Only the weekday will eventually be used, so the exact date does not matter.
          */
         for (_, value) in Dictionary(grouping: openWeatherForecast.list, by: { $0.date.weekday }) {
-            guard let maxTemp = getMaxTemp(forecasts: value) else {
+            guard let maxTemp = WCWeatherServiceWorker.getMaxTemp(forecasts: value) else {
                 continue
             }
-            guard let condition = try getPriorityCondition(forecasts: value) else {
+            guard let condition = try WCWeatherServiceWorker.getPriorityCondition(forecasts: value) else {
                 continue
             }
             guard let date = value.first?.date else {
@@ -64,13 +58,13 @@ extension WCWeatherServiceWorker {
         }
     }
     
-    private func getMaxTemp(forecasts: [OpenWeatherForecast]) -> Double? {
+    private static func getMaxTemp(forecasts: [OpenWeatherForecast]) -> Double? {
         forecasts.sorted {
             $0.temperatureInfo.max > $1.temperatureInfo.max
         }.first?.temperatureInfo.max
     }
     
-    private func getPriorityCondition(forecasts: [OpenWeatherForecast]) throws -> OpenWeatherCondition? {
+    private static func getPriorityCondition(forecasts: [OpenWeatherForecast]) throws -> OpenWeatherCondition? {
         return try forecasts.sorted {
             guard let element1 = $0.weatherInfo.first else {
                 throw IntegrationError.dataMapping

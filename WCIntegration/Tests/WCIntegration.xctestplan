@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "EC37C4B9-A7AD-44E8-A61B-7F6ED01D7610",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "WCIntegrationTests",
+        "name" : "WCIntegrationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

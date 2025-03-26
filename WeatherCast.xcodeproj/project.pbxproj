@@ -30,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		513E64A22D937FE300084D38 /* WCIntegration.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = WCIntegration.xctestplan; path = WCIntegration/Tests/WCIntegration.xctestplan; sourceTree = "<group>"; };
 		5165120E2D8DB7FA002336DF /* WCDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = WCDomain; sourceTree = "<group>"; };
 		51CB1FF12D8D6C5E00BD480F /* WeatherCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51CB20032D8D6C6000BD480F /* WeatherCastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherCastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +88,7 @@
 		51CB1FE82D8D6C5E00BD480F = {
 			isa = PBXGroup;
 			children = (
+				513E64A22D937FE300084D38 /* WCIntegration.xctestplan */,
 				5165120E2D8DB7FA002336DF /* WCDomain */,
 				51CB20402D8D7A3600BD480F /* WCDatabase */,
 				51CB203F2D8D79EC00BD480F /* WCIntegration */,
