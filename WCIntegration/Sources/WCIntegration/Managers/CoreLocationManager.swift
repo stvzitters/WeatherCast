@@ -24,7 +24,7 @@ final class CoreLocationManager: NSObject, Sendable {
                 
                 switch self.locationManager.authorizationStatus {
                 case .authorizedWhenInUse:
-                    locationManager.startUpdatingLocation()
+                    locationManager.requestLocation()
                 default:
                     self.locationManagerDidChangeAuthorization(self.locationManager)
                 }
