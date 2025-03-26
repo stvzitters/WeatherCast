@@ -37,6 +37,7 @@ The forest design was implemented, according to the provided assets.
   - All user-facing strings, including error messages, have been localized. The only supported languagge is English for now, but the ground work has been layed so that additional language support would be trivial.
 - General Notes:
   - I have noticed that often (particularly when running the app on a physical device) the current day minimum, maximum and current temperatures provided by OpenWeather are basically the same for the device location. This does not seem to happen when running on a simulator. I've double-checked this and can provide a sample JSON response received from OpenWeather to demonstrate.
+  - If you launch the app and deny authorization for location services, you can grant the authorization afterwards in the Settings app. Just relaunch the app and it will offer the authorization prompt again.
 
 #### Building the project
 
